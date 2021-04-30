@@ -64,4 +64,4 @@ while True:
 print('Закончили')
 exit()
 
-# Генерируем update
+# Генерируем update2
