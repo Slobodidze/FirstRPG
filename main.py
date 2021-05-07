@@ -23,7 +23,7 @@ def gen_loc():
     a = 0           #переменная для генератора случайностей
     q = 0           #переменная для генератора случайностей
     gloc = 0        #переменная локации
-    q = random.randint(0, 10)  # Генерируем Шанс попасть в одну из локаций
+    q = random.randint(1, 10)  # Генерируем Шанс попасть в одну из локаций
     if q <= 6:
         gloc = 0    #ЧАЩА
         print(f'Вы попали в локацию: {loc_dict[gloc]}')
@@ -67,19 +67,50 @@ def gen_loc():
     return gloc;
 # Функция генерации существ
 def gen_animal(aloc):
-    print(f'get: {aloc}')
-
-    q = 0           #переменная для генератора случайностей
+    print(f'генерируем существо по правилам: {loc_dict[aloc]}')
+    choice = 0  # переменная существа
+    animal = 0  # Вид существа
+    agro = 0  # агресивность существа
+    xp = 0  # здоровъе существа
+    damag = 0  # Дамаг существа
+    q = 0  # переменная для генератора случайностей
     q = random.randint(0, 100)  # Генерируем Шанс встретить существо
     if q >= chanse:
         print('Здесь животных нет')
     else:
-        #print('животное сгенерировано')
-        global choice = random.randint(1, 8)  # Генерируем число
-        global animal = name[choice]  # Преобразуем число в название
-        global agro = status[choice]  # Преобразуем число в статус
-        global xp = random.randint(minxp[choice], maxxp[choice])  # Генерируем xp
-        global damag = random.randint(mindamag[choice], maxdamag[choice])  # Генерируем damag
+        # print('животное сгенерировано')
+        if aloc == 0:  # ЧАЩА
+            # Змея(3),Обезъяна(3),БронеЖук(2),КиренРысь(1),Пальмоголовый(1),Пантера(1) = 11
+            a = random.randint(1, 11)  # Генерируем существо
+            if a <= 3:
+                print('Здесь Змея')
+                choice = 6
+            if 3 < a <= 6:
+                print('Здесь Обезъяна')
+                choice = 7
+            if 6 < a <= 8:
+                print('Здесь БронеЖук')
+                choice = 1
+                if 8 < a <= 9:
+                    print('Здесь КиренРысь')
+                choice = 3
+                if 9 < a <= 10:
+                    print('Здесь Пальмоголовый')
+                choice = 4
+                if 10 < a <= 11:
+                    print('Здесь Пантера')
+                choice = 5
+        if aloc == 1:
+            print(f'Вы попали в локацию: {loc_dict[aloc]}')
+
+        if aloc == 2:
+            print(f'Вы попали в локацию: {loc_dict[aloc]}')
+
+        #choice = random.randint(1, 8)  # Генерируем число
+        animal = name[choice]  # Преобразуем число в название
+        agro = status[choice]  # Преобразуем число в статус
+        xp = random.randint(minxp[choice], maxxp[choice])  # Генерируем xp
+        damag = random.randint(mindamag[choice], maxdamag[choice])  # Генерируем damag
         if agro == 2:
             print(f'{animal} агресивно рычит и собирается напасть')
             print(f'оно будет атаковать с уроном: {damag}')
@@ -88,7 +119,7 @@ def gen_animal(aloc):
             player = input('Будем осматриваться?')
             if player == 'да' or player == '':
                 if agro == 1:
-                    print(f'Вы нашли спокойное {animal}, но оно будет защищаться')
+                    print(f'Вы нашли спокойное {animal}')
                     print(f'оно будет защищаться с уроном: {damag}')
                     print(f'у него: {xp} хр')
                 if agro == 0:
@@ -124,6 +155,12 @@ exit()
 
 # Генерируем update2
 """
+Локация 0 - ЧАЩА
+Локация 1 - Рысья пещера
+Локация 2 - Берег разбитых кораблей
+Локация 3 - Оружейная
+Локация 4 - Лагерь туземцев
+
 Начальная локация 0 - ЧАЩА
 Большой шанс(3) встретит змею, мартышку
 Средний шанс(2) встретить бронежука
