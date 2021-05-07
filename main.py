@@ -20,50 +20,18 @@ loc = 0         #переменная локации
 
 # Функция генерации минилокации
 def gen_loc():
-    a = 0           #переменная для генератора случайностей
     q = 0           #переменная для генератора случайностей
     gloc = 0        #переменная локации
     q = random.randint(1, 10)  # Генерируем Шанс попасть в одну из локаций
     if q <= 6:
         gloc = 0    #ЧАЩА
         print(f'Вы попали в локацию: {loc_dict[gloc]}')
-        #gen_animal(achoice = 1);
-        """
-        #Змея(3),Обезъяна(3),БронеЖук(2),КиренРысь(1),Пальмоголовый(1),Пантера(1) = 11
-        a = random.randint(1, 11)  # Генерируем существо
-        if a <= 3:
-            print('Здесь Змея')
-            global choice = 6;
-            gen_animal(gloc);
-        if 3 < a <= 6:
-            print('Здесь Обезъяна')
-            global choice = 7;
-            gen_animal();
-        if 6 < a <= 8:
-            print('Здесь БронеЖук')
-            global choice = 1);
-            gen_animal();
-        if 8 < a <= 9:
-            print('Здесь КиренРысь')
-            global choice = 3;
-            gen_animal();
-        if 9 < a <= 10:
-            print('Здесь Пальмоголовый')
-            global choice = 4;
-            gen_animal();
-        if 10 < a <= 11:
-            print('Здесь Пантера')
-            global choice = 5;
-            gen_animal();
-        """
     if 6 < q <= 8:
         gloc = 1    #Рысья пещера
         print(f'Вы попали в локацию: {loc_dict[gloc]}')
-        #gen_animal(achoice = 2);
     if 8 < q <= 10:
         gloc = 2    #Берег разбитых кораблей
         print(f'Вы попали в локацию: {loc_dict[gloc]}')
-        #gen_animal(achoice = 3);
     return gloc;
 # Функция генерации существ
 def gen_animal(aloc):
@@ -91,14 +59,14 @@ def gen_animal(aloc):
             if 6 < a <= 8:
                 print('Здесь БронеЖук')
                 choice = 1
-                if 8 < a <= 9:
-                    print('Здесь КиренРысь')
+            if 8 < a <= 9:
+                print('Здесь КиренРысь')
                 choice = 3
-                if 9 < a <= 10:
-                    print('Здесь Пальмоголовый')
+            if 9 < a <= 10:
+                print('Здесь Пальмоголовый')
                 choice = 4
-                if 10 < a <= 11:
-                    print('Здесь Пантера')
+            if 10 < a <= 11:
+                print('Здесь Пантера')
                 choice = 5
         if aloc == 1:
             print(f'Вы попали в локацию: {loc_dict[aloc]}')
