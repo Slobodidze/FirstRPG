@@ -74,7 +74,6 @@ def gen_animal(aloc):
         if aloc == 2:
             print(f'Вы попали в локацию: {loc_dict[aloc]}')
 
-        #choice = random.randint(1, 8)  # Генерируем число
         animal = name[choice]  # Преобразуем число в название
         agro = status[choice]  # Преобразуем число в статус
         xp = random.randint(minxp[choice], maxxp[choice])  # Генерируем xp
