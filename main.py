@@ -18,25 +18,62 @@ damag = 0       #Дамаг существа
 loc_dict = {0: 'ЧАЩА', 1: 'Рысья пещера', 2: 'Берег разбитых кораблей', 3: 'Оружейная', 4: 'Лагерь туземцев'}
 loc = 0         #переменная локации
 
+# Вступление
+def start():
+    print('Вы проснулись от громкого крика. Убрав с лица пальмовый лист, вы осмотрелись вокруг.')
+    print('Вы увидели лишь тропические заросли, где-то в далеке слышался шум волн.')
+    print('Чтобы выйти напишите: выход.')
+    global myxp
+    myxp = random.randint(7, 10)
+    global mydamag
+    mydamag = random.randint(1, 3)
+    global mywater
+    mywater = random.randint(20, 27)
+    player = input('Хотите осмотреться?')
+    if player == 'да' or player == '':
+        print('Осмотревшись вы выяснили, что')
+        print(f'Здоровъя у вас: {myxp} хр')
+        print(f'Запасов воды у вас на: {mywater} перемещений')
+        print(f'Ваши хилые руки способны нанести: {mydamag} урона')
+    else:
+        print(f'Вы так и не выяснили своё состояние - Отдавшись на волю случая')
+        print(f'Будьте осторожны, подобная небрежность или несмотрительность')
+        print(f'Могут стоить вам жизни')
+    return
+# Функция снижения количества воды с каждым ходом
+def water():
+    global myxp
+    global mywater
+    if mywater >= 1:
+        mywater = mywater - 1
+        print(f'Запасов воды осталось на: {mywater} перемещений')
+    else:
+        print(f'Из-за недостатка воды заше здоровье снизилось')
+        print(f'Это будет происходить каждых 5 шагов, пока вы не найдёте воду')
+        myxp = myxp - 1
+        if myxp <= 0:
+            print('Вы умерли от жажды. Какая нелепая смерть для такого героя')
+            exit()
+        mywater = 5
+        print(f'У вас осталось: {myxp} хр Здоровъя')
 # Функция генерации минилокации
 def gen_loc():
     q = 0           #переменная для генератора случайностей
     gloc = 0        #переменная локации
+    global loc
     q = random.randint(1, 10)  # Генерируем Шанс попасть в одну из локаций
     if q <= 6:
-        gloc = 0    #ЧАЩА
-        print(f'Вы попали в локацию: {loc_dict[gloc]}')
+        loc = 0    #ЧАЩА
     if 6 < q <= 8:
-        gloc = 1    #Рысья пещера
-        print(f'Вы попали в локацию: {loc_dict[gloc]}')
+        loc = 1    #Рысья пещера
     if 8 < q <= 10:
-        gloc = 2    #Берег разбитых кораблей
-        print(f'Вы попали в локацию: {loc_dict[gloc]}')
-    return gloc;
+        loc = 2    #Берег разбитых кораблей
+    print(f'Вы попали в локацию: {loc_dict[gloc]}')
+    return
 # Функция генерации существ
 def gen_animal(aloc):
     #print(f'генерируем существо по правилам: {loc_dict[aloc]}')
-    achoice = 0  # переменная существа
+    choice = 0  # переменная существа
     animal = 0  # Вид существа
     agro = 0  # агресивность существа
     xp = 0  # здоровъе существа
@@ -53,112 +90,87 @@ def gen_animal(aloc):
             # Змея(3),Обезъяна(3),БронеЖук(2),КиренРысь(1),Пальмоголовый(1),Пантера(1) = 11
             a = random.randint(1, 11)  # Генерируем существо
             if a <= 3:# Змея
-                #print('Здесь Змея')
-                achoice = 6
-            if 3 < a <= 6:
-                #print('Здесь Обезъяна')
-                achoice = 7
-            if 6 < a <= 8:
-                #print('Здесь БронеЖук')
-                achoice = 1
-            if 8 < a <= 9:
-                #print('Здесь КиренРысь')
-                achoice = 3
-            if 9 < a <= 10:
-                #print('Здесь Пальмоголовый')
-                achoice = 4
-            if 10 < a <= 11:
-                #print('Здесь Пантера')
-                achoice = 5
+                choice = 6
+            if 3 < a <= 6:# Обезъяна
+                choice = 7
+            if 6 < a <= 8:# БронеЖук
+                choice = 1
+            if 8 < a <= 9:# КиренРысь
+                choice = 3
+            if 9 < a <= 10:# Пальмоголовый
+                choice = 4
+            if 10 < a <= 11:# Пантера
+                choice = 5
         # Рысья пещера
         if aloc == 1:
             # Кирена(3),Чихающий еж(3),Пантера(2),Пальмоголовы(1),мартышка(1),бронежук(1) = 11
             a = random.randint(1, 11)  # Генерируем существо
-            if a <= 3:
-                #print('Здесь Кирена')
-                achoice = 3
-            if 3 < a <= 6:
-                #print('Здесь Чихающий Еж')
-                achoice = 7
-            if 6 < a <= 8:
-                #print('Здесь Пантера')
-                achoice = 2
-            if 8 < a <= 9:
-                #print('Здесь Пальмоголовий')
-                achoice = 4
-            if 9 < a <= 10:
-                #print('Здесь мартышка')
-                achoice = 7
-            if 10 < a <= 11:
-                #print('Здесь бронежук')
-                achoice = 1
+            if a <= 3:# Здесь Кирена
+                choice = 3
+            if 3 < a <= 6:# Здесь Чихающий Еж
+                choice = 7
+            if 6 < a <= 8:# Здесь Пантера
+                choice = 2
+            if 8 < a <= 9:# Здесь Пальмоголовий
+                choice = 4
+            if 9 < a <= 10:# Здесь  мартышка
+                choice = 7
+            if 10 < a <= 11:# Здесь  бронежук
+                choice = 1
         # Берег разбитых кораблей
         if aloc == 2:
             # Бронежук(3),Змея(1),Обезьяна(1),КиреньРысь(1),Пальмоголовый(1),Пантера(1) = 11
             a = random.randint(1, 10)  # Генерируем существо
-            if a <= 3:
-                #print('Здесь Бронежук')
-                achoice = 1
-            if 3 < a <=4:
-                #print('Здесь Змея')
-                achoice = 6
-            if 4 < a <=5:
-                #print('Здесь Обезьяна')
-                achoice = 7
-            if 8 < a <=9:
-                #print('КиреньРысь')
-                achoice = 3
-            if 9 < a <=10:
-                #print('Здесь Пальмоголовый')
-                achoice = 4
-            if 10 < a <=11:
-                #print('Здеь Пантера')
-                achoice = 2
-        print(f'Здесь {name[achoice]}')
-        animal = name[achoice]  # Преобразуем число в название
-        agro = status[achoice]  # Преобразуем число в статус
-        xp = random.randint(minxp[achoice], maxxp[achoice])  # Генерируем xp
-        damag = random.randint(mindamag[achoice], maxdamag[achoice])  # Генерируем damag
+            if a <= 3:# Здесь Бронежук
+                choice = 1
+            if 3 < a <=4:# Здесь Змея
+                choice = 6
+            if 4 < a <=5:# Здесь Обезьяна
+                choice = 7
+            if 8 < a <=9:# КиреньРысь
+                choice = 3
+            if 9 < a <=10:# Здесь Пальмоголовый
+                choice = 4
+            if 10 < a <=11:# Здесь Пантера
+                choice = 2
+        #print(f'Здесь {name[choice]}')
+        animal = name[choice]  # Преобразуем число в название
+        agro = status[choice]  # Преобразуем число в статус
+        xp = random.randint(minxp[choice], maxxp[choice])  # Генерируем xp
+        damag = random.randint(mindamag[choice], maxdamag[choice])  # Генерируем damag
         if agro == 2:
             print(f'{animal} агресивно рычит и собирается напасть')
             print(f'оно будет атаковать с уроном: {damag}')
             print(f'у него: {xp} хр')
         else:
-            player = input('Будем осматриваться?')
-            if player == 'да' or player == '':
-                if agro == 1:
-                    print(f'Вы нашли спокойное {animal}')
-                    print(f'оно будет защищаться с уроном: {damag}')
-                    print(f'у него: {xp} хр')
-                if agro == 0:
-                    print(f'Вы нашли безобидное животное: {animal} оно трусливо убегает')
-                    print(f'и не будет обороняться')
-                    print(f'у него: {xp} хр')
+            print(f'Просто удивительно, но на вас никто не напал и даже не зарычал')
+        player = input('Будем осматриваться?')
+        if player == 'да' or player == '':
+            if agro == 1:
+                print(f'Вы нашли спокойное {animal}')
+                print(f'оно будет защищаться с уроном: {damag}')
+                print(f'у него: {xp} хр')
+            if agro == 0:
+                print(f'Вы нашли безобидное животное: {animal} оно трусливо убегает')
+                print(f'и не будет обороняться')
+                print(f'у него: {xp} хр')
     return;
 
-# Вступление
-print('Вы проснулись от громкого крика. Убрав с лица пальмовый лист, вы осмотрелись вокруг.')
-print('Вы увидели лишь тропические заросли, где-то в далеке слышался шум волн.')
-print('Чтобы выйти напишите: выход.')
-myxp = random.randint(7, 10)
-mydamag = random.randint(1, 3)
-mywater = random.randint(20, 27)
-player = input('Будем осматриваться?')
-if player == 'да' or player == '':
-    print('Осмотревшись вы выяснили, что')
-    print(f'Здоровъя у вас: {myxp} хр')
-    print(f'Запасов воды у вас на: {mywater} перемещений')
-    print(f'Ваши хилые руки способны нанести: {mydamag} урона')
+
+start()# Вступление
 # основная программа
-while True:
+while myxp>=1:
     player = input('Ходим?')
     if player == 'выход':
         print('Досвидания')
         exit()
-    loc = gen_loc();
-    gen_animal(loc);
-    # print(f'animal {name[choice]} хр: {xp} damag: {damag} ')
-print('Закончили')
+    else:
+        water()
+        gen_loc()
+        #print(f'Вы попали в локацию: {loc_dict[loc]}')
+        gen_animal(loc)
+        #print(f'animal {name[choice]} хр: {xp} damag: {damag} ')
+print('У вас закончились жизни')
 exit()
 
 """
