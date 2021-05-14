@@ -180,9 +180,37 @@ def leave():
     print(f'Будьте осторожны, подобная небрежность или несмотрительность')
     print(f'Могут стоить вам жизни')
     return;
-
+# Функция битвы
 def fight():
-    print(f'Эта функция ещё не написана. Лень победила Даню')
+    #print(f'Эта функция ещё не написана. Лень победила Даню')
+    global myxp
+    global animal
+    global mydamag
+    global xp
+    global damag
+    playerAtak=0
+    print(f"Атаковать? {animal} с ударом {mydamag}")
+    print(f"Бежать? от {animal} то он ударит вас 2 раза с уроном {damag}")
+    print("Твой выбор Атака/Бежать")
+    player = input('Будем Атаковать (А) Или Бежать (Enter)?')
+    if player == 'A' or player == 'А' or player == 'a' or player == 'а':     # Атаковать
+        print(f"Вы решаете атаковать {animal}")
+        while myxp >= 1 or xp >= 1:
+            xp = xp -mydamag
+            myxp = myxp - damag
+            print(f"Вы бьете животное с уроном {mydamag}")
+            print(f"Вас бьют с уроном {damag}")
+            print(f"Увас здоровья {myxp} Здоровье животного {xp}")
+            if myxp >= 1:
+                print("Вы умерли")
+            elif myxp >= 1:
+                print("Вы выйграли")
+            else:
+                print("Бьемся дальше ")
+    else:                                                  # НЕ Атаковать - Значит сбегаем
+        print(f"Вы решаете спасаться бегством от {animal}")
+        myxp = (myxp - damag) * 2
+        print (f"Вы получаете урон от {animal} у вас осталось здоровья {myxp} ! ")
     return
 
 start()         # Вступление
