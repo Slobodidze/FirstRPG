@@ -28,8 +28,8 @@ def start():
     mydamag = random.randint(1, 3)              #Генерируем Запасов воды у вас
     global mywater
     mywater = random.randint(20, 27)            #Генерируем вашего урона
-    player = input('Хотите осмотреться?')
-    if player == 'да' or player == '':
+    player = input('Будем осматриваться (O) Или уйдём (Enter)?')
+    if player == 'O' or player == 'О' or player == '0' or player == 'о' or player == 'o':
         print('Осмотревшись вы выяснили, что')
         print(f'Здоровъя у вас: {myxp} хр')
         print(f'Запасов воды у вас на: {mywater} перемещений')
@@ -79,11 +79,7 @@ def gen_animal(aloc):
     global damag                # Дамаг существа
     q = 0  # переменная для генератора случайностей
     q = random.randint(0, 100)  # Генерируем Шанс встретить существо
-    if q >= chanse:     #Шанс встретить существо
-        print('Здесь животных нет') #
-    # Встречаем существо
-    else:
-        # print('животное сгенерировано')
+    if q <= chanse:     #Шанс встретить существо
         # ЧАЩА
         if aloc == 0:  # ЧАЩА
             # Змея(3),Обезъяна(3),БронеЖук(2),КиренРысь(1),Пальмоголовый(1),Пантера(1) = 11
@@ -143,25 +139,30 @@ def gen_animal(aloc):
             print(f'у него: {xp} хр')
         else:
             print(f'Просто удивительно, но на вас никто не напал и даже не зарычал')
-        player = input('Будем осматриваться?')
-        if player == 'да' or player == '':
-            if agro == 1:
-                print(f'Вы нашли спокойное {animal}')
-                print(f'оно будет защищаться с уроном: {damag}')
-                print(f'у него: {xp} хр')
-            if agro == 0:
-                print(f'Вы нашли безобидное животное: {animal} оно трусливо убегает')
-                print(f'и не будет обороняться')
-                print(f'у него: {xp} хр')
+
+
     return;
 # Функция Осмотреться
 def lookout():
+    if agro == 1:
+        print(f'Вы осмотрелись и нашли спокойное {animal}')
+        print(f'оно будет защищаться с уроном: {damag}')
+        print(f'у него: {xp} хр')
+    if agro == 0:
+        print(f'Вы осмотрелись и нашли безобидное животное: {animal} оно трусливо убегает')
+        print(f'и не будет обороняться')
+        print(f'у него: {xp} хр')
     return;
-
+# Функция Уйти и неОсмотреться
+def leave():
+    print(f'Вы так и не Осмотрелись - Отдавшись на волю случая')
+    print(f'Будьте осторожны, подобная небрежность или несмотрительность')
+    print(f'Могут стоить вам жизни')
+    return;
 start()         # Вступление
 # основная программа
 while myxp>=1:
-    player = input('Ходим?')
+    player = input('Ходим (Enter)?')
     if player == 'выход':
         print('Досвидания')
         exit()
@@ -170,7 +171,20 @@ while myxp>=1:
         gen_loc()
         #print(f'Вы попали в локацию: {loc_dict[loc]}')
         gen_animal(loc)
-        #print(f'animal {name[choice]} хр: {xp} damag: {damag} ')
+        player = input('Будем осматриваться (O) Или уйдём (Enter)?')
+        if player == '':
+            leave()
+        if player == 'O' or player == 'О' or player == '0' or player == 'о' or player == 'o':
+            lookout()
+        if loc == 2:
+            Q = random.randint(1, 10)
+            print(f'у вас есть шанс попасть в локацию с оружейной комнатой')
+            if Q == 1:
+                loc = 3
+                print(f'Вы нашли корабль с уцелевшей оружейной комнатой')
+                gen_animal(loc)
+            else:
+                print(f'не повезло')
 print('У вас закончились жизни')
 exit()
 
