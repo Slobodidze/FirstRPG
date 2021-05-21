@@ -14,6 +14,8 @@ damag = 0       # Дамаг существа
 loc = 0         # переменная локации
 
 
+
+
 def start():
     print('Вы проснулись от громкого крика. Убрав с лица пальмовый лист, вы осмотрелись вокруг.')
     print('Вы увидели лишь тропические заросли, где-то в далеке слышался шум волн.')
@@ -55,6 +57,25 @@ def water():
         print(f'У вас осталось: {myxp} хр Здоровъя')
     return
 
+# Функция добавления воды
+def ad_water():
+    global ad_water
+    if mywater <= 17:
+        mywater = mywater + 1
+        print(f'Вы нашли воду.Запасов воды у вас:  {mywater}')
+
+# Функция добавления здоровья
+def ad_xp():
+    global ad_xp
+    if myxp <= 5:
+        myxp = myxp + 1
+        print(f'Вы нашли еду.Запасов здоровья у вас:  {myxp}')
+
+def add_water(water):
+    global mywater
+    mywater = mywater + water
+    print(f'Теперь воды хватит на: {mywater} перемещений')
+    return
 
 #  Функция генерации минилокации
 def gen_loc():
@@ -74,9 +95,6 @@ def gen_loc():
 #  Функция минилокации Оружейная
 '''
 Вы нашли корабль с уцелевшей оружейной комнатой
-Большой шанс встретить - обезьяну и змею
-Средней шанс встретить - никого
-Маленький шанс - бронежук
 **Оружие и броня **
 Роба туземца +4хп
 Арбалет 5 по 3,5 урона
@@ -95,6 +113,8 @@ def o_loc():
             print(f'Вы видите только пустой пляж')
         else:
             print(f'Вы видите только бесполезные доски от разбившегося корабля')
+    return
+
 
 #  Функция генерации существ
 def gen_animal(aloc):
@@ -130,7 +150,7 @@ def gen_animal(aloc):
             if a <= 3:#  Здесь Кирена
                 choice = 3
             if 3 < a <= 6:#  Здесь Чихающий Еж
-                choice = 7
+                choice = 8
             if 6 < a <= 8:#  Здесь Пантера
                 choice = 2
             if 8 < a <= 9:#  Здесь Пальмоголовий
@@ -187,6 +207,93 @@ def gen_animal(aloc):
             print(f'Просто удивительно, но на вас никто не напал и даже не зарычал')
     return
 
+def sravnenie_weapon():
+    global mydamag
+    global damag
+    global myweapon
+    global weapon
+    if {mydamag} > {damag}:
+        print (f'Вы оставили свое оружие {myweapon}')
+    else:
+        {mydamag} < {damag}
+        print (f'Вы взяли новое оружие {weapon}')
+    return
+
+"""
+#  Функция генерации Осмотреться
+def loot_function():
+    
+    #global name_weapon
+    #global w_choice
+    #global name_armor
+    #global l
+    #global schoice
+    #global water
+    #global weapon_damag
+    sunduk_gen = 0
+    w_choice = 0    #переменная оружия
+    a_choice = 0 #переменная брони
+    schoice = 0
+    #Генератор среднее кол-во воды и какое-то оружие* или доспехи* (50%)
+    #или большое кол-во воды - от 6 до 8 перемещений(50%)
+   
+    water = 0 #water - Кол-во воды
+    if loc == 0:
+        sunduk_gen = random.randint(1, 100)
+        if sunduk_gen == 60:
+            water = random.randint(2, 5)
+            print(f'Вы нашли мешок с припасами. Теперь вам хватает воды еще на {water}')
+            add_water(water)
+        if sunduk_gen == 30:
+            water = random.randint(4, 6)
+            print(f'Вы нашли уцелевшую бочку. В ней хватает припасов еще на{water}')
+            add_water(water)
+        if sunduk_gen <= 70:
+            schoice = random.randint(1,2)
+            if schoice == 1:
+                water = random.randint(4,6)
+            #Палка-копалка - 2 урона
+           #Каменный молот - 3 урона
+            #Охотничий нож - 3 урона
+            #Испанская сабля(шпага) - 4 урона
+            #Копьё джунглей - 7 урона
+            #Лук туземцев - 8 урона
+            #Змеиный пояс - 70%
+            #Охотничий нож - 0%
+            #Копьё джунглей- 5%
+            #Доспехи джунглей - 3%
+            
+            w_choice = random.randint(1, 100)
+            if w_choice <= 5:
+                name_weapon = 4
+            if w_choice >= 90:
+                name_weapon = 0
+            if w_choice <= 90:
+                name_weapon = 1
+            if w_choice == 70:
+                name_weapon = 2
+                print(f'Вы нашли сундук. Открыв его, вы обнаружили, что в нем содержится припасов еще на {water} перемещений и {name_weapon}. Его дамаг - {weapon_damage}.')
+                add_water(water)
+            else:
+                a_choice = random.randint(1, 100)
+                if a_choice <= 3:
+                    name_armor = 3
+                if a_choice >= 70:
+                    name_armor = 0
+                    print(f'Вы нашли сундук. Открыв его, вы обнаружили, что в нем содержится припасов еще на {water} перемещений и {name_armor}. Его хп - {xp_armor}.')
+                    add_water(water)
+        if sunduk_gen <= 1:
+            schoice = random.randint(1,10)
+            if schoice <= 5:
+                name_weapon = 4
+                print(f' Поздравляем! Вы нашли уникальный сундук - Сундук Джунглей. В нем покоится Легендарное Копьё Джунглей. Его дамаг -{weapon_damag}. ')
+            else:
+                name_armor = 3
+                print(f'Поздравляем! Вы нашли уникальный сундук - Сундук Джунглей. В нем покоится Легендарные Доспехи Джунглей. Его хп - {xp_armor}. )
+        else:
+            print(f'Вы нашли сундук. Открыв его, вы ничего в нём не обнаружили. Похоже кто-то уже успел забрать сокровище.')
+    return
+"""
 
 #  Функция Осмотреться
 def lookout():
@@ -228,23 +335,55 @@ def fight():
     player = input('Будем Атаковать (А) Или Бежать (Enter)?')
     if player == 'A' or player == 'А' or player == 'a' or player == 'а':     #  Атаковать
         print(f"Вы решаете атаковать {animal}")
-        while myxp >= 1 or xp >= 1:
-            xp = xp -mydamag
-            myxp = myxp - damag
-            print(f"Вы бьете животное с уроном {mydamag}")
-            print(f"Вас бьют с уроном {damag}")
-            print(f"Увас здоровья {myxp} Здоровье животного {xp}")
-            if myxp >= 1:
-                print("Вы умерли")
-            elif myxp >= 1:
-                print("Вы выйграли")
-            else:
-                print("Бьемся дальше ")
+        if agro == 0:
+            while myxp >= 1 or xp >= 1:
+                xp = xp -mydamag
+                myxp = myxp
+                print(f"Вы бьете животное с уроном {mydamag}")
+                print(f"Увас здоровья {myxp} Здоровье животного {xp}")
+                if xp <= 1:
+                    print("Вы выйграли")
+                else:
+                    print("Бьемся дальше ")
+        elif agro == 1:
+            while True:
+                xp = xp - mydamag
+                myxp = myxp - damag
+                print(f"Вы бьете животное с уроном {mydamag}")
+                print(f"Вас бьют с уроном {damag}")
+                print(f"Увас здоровья {myxp} Здоровье животного {xp}")
+                if myxp <= 1:
+                    print("Вы умерли")
+                    input()
+                    exit()
+                elif xp <= 0:
+                    print("Вы выйграли")
+                    print(f"Увас здоровья {myxp} Здоровье животного {xp}")
+                    break
+                else:
+                    print("Бьемся дальше ")
+        else:
+            while True:
+                xp = xp - mydamag
+                myxp = myxp - damag
+                print(f"Вы бьете животное с уроном {mydamag}")
+                print(f"Вас бьют с уроном {damag}")
+                print(f"Увас здоровья {myxp} Здоровье животного {xp}")
+                if myxp <= 1:
+                    print("Вы умерли")
+                    input()
+                    exit()
+                elif xp <= 0:
+                    print("Вы выйграли")
+                    break
+                else:
+                    print("Бьемся дальше ")
     else:                                                  #  НЕ Атаковать - Значит сбегаем
         print(f"Вы решаете спасаться бегством от {animal}")
         myxp = (myxp - damag) * 2
         print (f"Вы получаете урон от {animal} у вас осталось здоровья {myxp} ! ")
     return
+
 
 start()         #  Вступление
 
@@ -264,7 +403,7 @@ while myxp>=1:
             leave()
         if player == 'O' or player == 'О' or player == '0' or player == 'о' or player == 'o':
             lookout()
-            o_loc()
+            #o_loc()
 print('У вас закончились жизни')
 exit()
 

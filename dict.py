@@ -5,7 +5,10 @@ maxxp = {0: 0, 1: 6, 2: 7, 3: 8, 4: 7, 5: 15, 6: 3, 7: 4, 8: 5}
 mindamag = {0: 0, 1: 2, 2: 3, 3: 3, 4: 3, 5: 8, 6: 2, 7: 2, 8: 0}
 maxdamag = {0: 0, 1: 4, 2: 5, 3: 7, 4: 9, 5: 10, 6: 3, 7: 5, 8: 0}
 loc_dict = {0: 'ЧАЩА', 1: 'Рысья пещера', 2: 'Берег разбитых кораблей', 3: 'Оружейная', 4: 'Лагерь туземцев'}
-
+name_weapon = {0:'Ничего',1:'Палка-копалка', 2:'Каменный молот', 3:'Охотничий нож', 4:'Испанская сабля', 5:'Копьё джунглей', 6:'Лук туземцев'}
+weapon_damag = {1:2, 2:3, 3:3, 4:4, 5:7, 6:8} #дамаг оружия
+xp_armor = {1:2, 2:3, 3:4, 4:5, 5:10}
+name_armor = {0:'Ничего', 1:'Змеиный пояс', 2:'Комплект пирата', 3:'Роба туземца', 4:'Доспехи джунглей', 5:'Футболка "Я сдал ЕГЭ"'}
 
 '''
 Все "Сундуки" будут делится на 4 вида:
@@ -67,4 +70,97 @@ loc_dict = {0: 'ЧАЩА', 1: 'Рысья пещера', 2: 'Берег разб
 Лук туземцев - 50%
 Роба туземца - 50%
 ИЩЕМ?
+
+if loc == 1: #Рысья Пещера
+    print(f'Вы нашли сундук. Открыв его, вы ничего в нём не обнаружили. Похоже кто-то уже успел забрать сокровище.')
+
+if loc == 2: #Берег разбитых кораблей
+    sunduk_gen = random.randint(1, 100)
+    if sunduk_gen >= 70:
+        water = random.randint(2, 5)
+        print(f'Вы нашли мешок с припасами. Теперь вам хватает воды еще на {water}')
+        mywater + water = my water
+    if sunduk_gen == 69:
+        water = random.randint(4, 6)
+        print(f'Вы нашли уцелевшую бочку. В ней хватает припасов еще на{water}')
+        mywater + water = my water
+    if sunduk_gen <= 50:
+        schoice = random.randint(1,2)
+        """Испанская сабля - 10%
+            Комплект пирата - 20%
+            Охотничий нож - 30%
+            Роба туземца - 5%
+        """
+        if schoice == 1:
+            water = random.randint(4,6)
+            w_choice = random.randint(1, 100)
+            if w_choice == 10:
+                name_weapon = 3
+            if w_choice >= 30:
+                name_weapon = 2
+                print(f'Вы нашли сундук. Открыв его, вы обнаружили, что в нем содержится припасов еще на {water} перемещений и {name_weapon}. Его дамаг - {weapon_damage}.')
+                mywater + water = my water
+        else:
+            a_choice = random.randint(1, 100)
+        if a_choice <= 20:
+            name_armor = 1
+        if a_choice <= 5:
+            name_armor = 2
+            print(f'Вы нашли сундук. Открыв его, вы обнаружили, что в нем содержится припасов еще на {water} перемещений и {name_armor}. Его хп - {xp_armor}.')
+            mywater + water = my water
+    if sunduk_gen <= 15:
+        schoice = random.randint(1,2)
+        if schoice == 1:
+            name_weapon = 4
+            print(f' Поздравляем! Вы нашли уникальный сундук - Сундук капитана. В нем покоится Испанская сабля. Его дамаг -{weapon_damag}. ')
+        if schoice == 2:
+            name_armor = 3
+            print(f'Поздравляем! Вы нашли уникальный сундук - Сундук капитана. В нем лежит Комплект пирата. Его хп - {xp_armor}. )
+        else:
+            print(f'Вы нашли сундук. Открыв его, вы ничего в нём не обнаружили. Похоже кто-то уже успел забрать сокровище.')
+        else:
+        print(f'Вы были невнимательны, поэтому ничего не нашли.')
+
+if loc == 3: #Оружейная
+    sunduk_gen = random.randint(1, 10)
+    if sunduk_gen >= 9:
+        water = random.randint(2, 5)
+        print(f'Вы нашли мешок с припасами. Теперь вам хватает воды еще на {water}.')
+        mywater + water = my water
+    if sunduk_gen == 10:
+        water = random.randint(4, 6)
+        print(f'Вы нашли уцелевшую бочку. В ней хватает припасов еще на{water}.')
+        mywater + water = my water
+    if sunduk_gen == 5:
+        schoice = random.randint(1,2)
+        """Испанская сабля - 30%
+        Охотничий нож - 50%
+        Лук туземцев - 20%
+        """
+        if schoice == 1:
+            water = random.randint(4,6)
+            w_choice = random.randint(1, 10)
+        if w_choice <= 2:
+            name_weapon = 5
+        if w_choice >= 5:
+            name_weapon = 2
+        if w_choice == 3:
+            name_weapon = 3
+            print(f'Вы нашли сундук. Открыв его, вы обнаружили, что в нем содержится припасов еще на {water} перемещений и {name_weapon}. Его дамаг - {weapon_damage}.')
+            mywater + water = my water
+        else:
+            a_choice = random.randint(1, 100)
+            if a_choice <= 20:
+                name_armor = 1
+            if a_choice <= 5:
+                name_armor = 2
+                print(f'Вы нашли сундук. Открыв его, вы обнаружили, что в нем содержится припасов еще на {water} перемещений и {name_armor}. Его хп - {xp_armor}.')
+                mywater + water = my water
+            else:
+                print(f'Вы были невнимательны, поэтому ничего не нашли.')
+
+if loc == 4: #Лагерь Туземцев
+    weapon_damag[name_weapon]       #Не уверен. Дамаг оружия в зависимости от его названия.
+    xp_armor[name_armor]        #Не уверен
+
 '''
