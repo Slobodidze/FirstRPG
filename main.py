@@ -254,8 +254,6 @@ while myxp>=1:
         if player == 'O' or player == 'О' or player == '0' or player == 'о' or player == 'o':
             lookout()
             o_loc()
-
-
 print('У вас закончились жизни')
 exit()
 
