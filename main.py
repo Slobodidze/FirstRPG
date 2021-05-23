@@ -1,57 +1,72 @@
 import random
-import PySimpleGUI as sg
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
 from dict import *
-myxp = 0        # переменная для вашего Здоровъя
-mydamag = 0     # переменная для вашего урона
-mywater = 0     # переменная для вашего Запасов воды
-chanse = 30     # Шанс встретить существо
-Q = 0           # переменная для генератора случайностей
-choice = 0      # переменная существа
-animal = 0      # Вид существа
-agro = 0        # агресивность существа
-xp = 0          # здоровъе существа
-damag = 0       # Дамаг существа
-loc = 0         # переменная локации
+'''
+myxp = 0  # переменная для вашего Здоровъя
+mydamag = 0  # переменная для вашего урона
+mywater = 0  # переменная для вашего Запасов воды
+chanse = 30  # Шанс встретить существо
+Q = 0  # переменная для генератора случайностей
+choice = 0  # переменная существа
+animal = 0  # Вид существа
+agro = 0  # агресивность существа
+xp = 0  # здоровъе существа
+damag = 0  # Дамаг существа
+loc = 0  # переменная локации
+'''
 
 
+class LoginScreen(GridLayout):
+
+    def __init__(self, **kwargs):
+        super(LoginScreen, self).__init__(**kwargs)
+        self.cols = 2
+        self.add_widget(Label(text='User Name'))
+        self.username = TextInput(multiline=False)
+        self.add_widget(self.username)
+        self.add_widget(Label(text='password'))
+        self.password = TextInput(password=True, multiline=False)
+        self.add_widget(self.password)
 
 
+class MyApp(App):
+
+    def build(self):
+        return LoginScreen()
+
+
+if __name__ == '__main__':
+    MyApp().run()
+'''
+#  Вступление
 def start():
-    # Define the window's contents
-    layout = [[sg.Text("What's your name?")],  # Part 2 - The Layout
-              [sg.Input()],
-              [sg.Button('Ok')]]
-
-    # Create the window
-    window = sg.Window('Window Title', layout)  # Part 3 - Window Defintion
-
-    # Display and interact with the Window
-    event, values = window.read()  # Part 4 - Event loop or Window.read call
-
-    # Do something with the information gathered
-    print('Hello', values[0], "! Thanks for trying PySimpleGUI")
-
-    # Finish up by removing from the screen
-    window.close()  # Part 5 - Close the Window
     print('Вы проснулись от громкого крика. Убрав с лица пальмовый лист, вы осмотрелись вокруг.')
     print('Вы увидели лишь тропические заросли, где-то в далеке слышался шум волн.')
-    print('Чтобы выйти напишите: выход.')
     global myxp
     myxp = random.randint(7, 10)                # Генерируем Здоровъя у вас
     global mydamag
     mydamag = random.randint(1, 3)              # Генерируем Запасов воды у вас
     global mywater
     mywater = random.randint(20, 27)            # Генерируем вашего урона
-    player = input('Будем осматриваться (O) Или уйдём (Enter)?')
+    player = input('Чтобы выйти напишите: выход; Осмотреться - (O) Уйти - (Enter)?')
     if player == 'O' or player == 'О' or player == '0' or player == 'о' or player == 'o':
         print('Осмотревшись вы выяснили, что')
         print(f'Здоровъя у вас: {myxp} хр')
         print(f'Запасов воды у вас на: {mywater} перемещений')
         print(f'Ваши хилые руки способны нанести: {mydamag} урона')
+    elif player == 'выход':
+        EXIT()
     else:
         print(f'Вы так и не выяснили своё состояние - Отдавшись на волю случая')
         print(f'Будьте осторожны, подобная небрежность или несмотрительность')
         print(f'Могут стоить вам жизни')
+    return
+def EXIT():
+    print('Досвидания')
+    exit()
     return
 
 
@@ -109,13 +124,12 @@ def gen_loc():
 
 
 #  Функция минилокации Оружейная
-'''
-Вы нашли корабль с уцелевшей оружейной комнатой
-**Оружие и броня **
-Роба туземца +4хп
-Арбалет 5 по 3,5 урона
-Какое-то кол-во воды, еды
-'''
+#  Вы нашли корабль с уцелевшей оружейной комнатой
+#  **Оружие и броня **
+#  Роба туземца +4хп
+#  Арбалет 5 по 3,5 урона
+#  Какое-то кол-во воды, еды
+
 def o_loc():
     if loc == 2:        # шанс попасть в локацию с оружейной комнатой
         Q = random.randint(1, 10)
@@ -408,8 +422,7 @@ start()         #  Вступление
 while myxp>=1:
     player = input('Ходим (Enter)?')
     if player == 'выход':
-        print('Досвидания')
-        exit()
+        EXIT()
     else:
         water()
         gen_loc()
@@ -421,6 +434,7 @@ while myxp>=1:
             lookout()
             #o_loc()
 print('У вас закончились жизни')
+'''
 exit()
 
 """ Правила локаций
